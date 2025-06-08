@@ -14,7 +14,7 @@ local function AddRecipeToHistory(recipeID)
     -- Add new recipe and move pointer
     table.insert(addonTable.recipes, recipeID)
     addonTable.pos = #addonTable.recipes
-    print("Added to history. Position:", addonTable.pos)
+    --print("Added to history. Position:", addonTable.pos)
 end
 
 EventRegistry:RegisterCallback("ProfessionsFrame.Show", function()
@@ -37,7 +37,7 @@ EventRegistry:RegisterCallback("ProfessionsFrame.Show", function()
             local testIndex = addonTable.pos + 1
             if addonTable.recipes[testIndex] then
                 addonTable.pos = testIndex
-                print("Moved forward. Position:", addonTable.pos)
+                --print("Moved forward. Position:", addonTable.pos)
                 addonTable.ignoreSelection = true
                 C_TradeSkillUI.OpenRecipe(addonTable.recipes[addonTable.pos])
                 PlaySound(SOUNDKIT.IG_CHAT_SCROLL_UP, "Master")
@@ -62,7 +62,7 @@ EventRegistry:RegisterCallback("ProfessionsFrame.Show", function()
             local testIndex = addonTable.pos - 1
             if addonTable.recipes[testIndex] then
                 addonTable.pos = testIndex
-                print("Moved backward. Position:", addonTable.pos)
+                --print("Moved backward. Position:", addonTable.pos)
                 addonTable.ignoreSelection = true
                 C_TradeSkillUI.OpenRecipe(addonTable.recipes[addonTable.pos])
                 PlaySound(SOUNDKIT.IG_CHAT_SCROLL_DOWN, "Master")
