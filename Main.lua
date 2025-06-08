@@ -14,10 +14,22 @@ local function AddRecipeToHistory(recipeID)
     -- Add new recipe and move pointer
     table.insert(addonTable.recipes, recipeID)
     addonTable.pos = #addonTable.recipes
-    --print("Added to history. Position:", addonTable.pos)
 end
 
 EventRegistry:RegisterCallback("ProfessionsFrame.Show", function()
+    if ProfessionsFrame.CraftingPage.SchematicForm then
+        C_Timer.After(0.15, function()
+            local schematicForm = ProfessionsFrame.CraftingPage.SchematicForm
+            local slots = schematicForm:GetSlots()
+            if slots then
+                for _, slot in ipairs(slots) do
+                    slot:SetCheckboxCallback(function()
+                        print("A")
+                    end)
+                end
+            end
+        end)
+    end
     if not prevButton and not nextButton then
         nextButton = CreateFrame("Button", nil, ProfessionsFrame)
         nextButton:SetSize(20, 20)
@@ -37,7 +49,6 @@ EventRegistry:RegisterCallback("ProfessionsFrame.Show", function()
             local testIndex = addonTable.pos + 1
             if addonTable.recipes[testIndex] then
                 addonTable.pos = testIndex
-                --print("Moved forward. Position:", addonTable.pos)
                 addonTable.ignoreSelection = true
                 C_TradeSkillUI.OpenRecipe(addonTable.recipes[addonTable.pos])
                 PlaySound(SOUNDKIT.IG_CHAT_SCROLL_UP, "Master")
@@ -62,7 +73,6 @@ EventRegistry:RegisterCallback("ProfessionsFrame.Show", function()
             local testIndex = addonTable.pos - 1
             if addonTable.recipes[testIndex] then
                 addonTable.pos = testIndex
-                --print("Moved backward. Position:", addonTable.pos)
                 addonTable.ignoreSelection = true
                 C_TradeSkillUI.OpenRecipe(addonTable.recipes[addonTable.pos])
                 PlaySound(SOUNDKIT.IG_CHAT_SCROLL_DOWN, "Master")
