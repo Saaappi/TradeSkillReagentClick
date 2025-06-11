@@ -5,16 +5,6 @@ addonTable.allRecipes = {}
 addonTable.ignoreSelection = false
 addonTable.itemToRecipeCache = {}
 
-local function AddRecipeToHistory(recipeID)
-    if addonTable.pos < #addonTable.recipes then
-        for i = #addonTable.recipes, addonTable.pos + 1, -1 do
-            table.remove(addonTable.recipes, i)
-        end
-    end
-    table.insert(addonTable.recipes, recipeID)
-    addonTable.pos = #addonTable.recipes
-end
-
 local function FindRecipeIDByItemID(itemID)
     if not itemID then return nil end
     local cached = addonTable.itemToRecipeCache[itemID]
@@ -29,7 +19,6 @@ local function FindRecipeIDByItemID(itemID)
 end
 
 EventRegistry:RegisterCallback("ProfessionsFrame.Show", function()
-    addonTable.pos = 0
     addonTable.recipes = {}
     addonTable.allRecipes = {}
     addonTable.itemToRecipeCache = {}
@@ -74,6 +63,6 @@ EventRegistry:RegisterCallback("ProfessionsRecipeListMixin.Event.OnRecipeSelecte
         return
     end
     if recipe.learned then
-        AddRecipeToHistory(recipe.recipeID)
+        table.insert(addonTable.recipes, recipe.recipeID)
     end
 end)
