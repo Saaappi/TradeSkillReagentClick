@@ -20,8 +20,8 @@ end
 
 local function IsCorrectModKey(modKey)
     return modKey == 0 or
-        (modKey == 1 and IsAltKeyDown()) or
-        (modKey == 2 and IsControlKeyDown())
+    (modKey == 1 and IsAltKeyDown()) or
+    (modKey == 2 and IsControlKeyDown())
 end
 
 EventRegistry:RegisterCallback("ProfessionsFrame.Show", function()
