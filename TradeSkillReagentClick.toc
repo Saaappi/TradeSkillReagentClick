@@ -1,8 +1,9 @@
-## Interface: 110105
+## Interface: 110107
 ## Title: TradeSkillReagentClick
-## Version: 1.0.0
+## Version: 1.1.0
 ## Author: LightskyGG
 ## IconTexture: 132911
+## SavedVariables: TSRCDB
 ## Category-enUS: Professions
 ## Category-deDE: Berufe
 ## Category-esES: Profesiones
@@ -15,4 +16,5 @@
 ## Category-zhCN: 专业技能
 ## Category-zhTW: 專業技能
 
+Init.lua
 Main.lua

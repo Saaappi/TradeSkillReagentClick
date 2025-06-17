@@ -18,6 +18,12 @@ local function FindRecipeIDByItemID(itemID)
     return nil
 end
 
+local function IsCorrectModKey(modKey)
+    return modKey == 0 or
+        (modKey == 1 and IsAltKeyDown()) or
+        (modKey == 2 and IsControlKeyDown())
+end
+
 EventRegistry:RegisterCallback("ProfessionsFrame.Show", function()
     addonTable.recipes = {}
     addonTable.allRecipes = {}
@@ -26,15 +32,12 @@ EventRegistry:RegisterCallback("ProfessionsFrame.Show", function()
     C_Timer.After(2, function()
         local recipeIDs = C_TradeSkillUI.GetAllRecipeIDs()
         for _, recipeID in ipairs(recipeIDs) do
-            local recipeInfo = C_TradeSkillUI.GetRecipeInfo(recipeID)
-            if recipeInfo.learned then
-                local outputLink = C_TradeSkillUI.GetRecipeItemLink(recipeID)
-                if outputLink then
-                    local itemID = C_Item.GetItemInfoInstant(outputLink)
-                    if itemID then
-                        table.insert(addonTable.allRecipes, { recipeID = recipeID, itemID = itemID })
-                        addonTable.itemToRecipeCache[itemID] = recipeID
-                    end
+            local outputLink = C_TradeSkillUI.GetRecipeItemLink(recipeID)
+            if outputLink then
+                local itemID = C_Item.GetItemInfoInstant(outputLink)
+                if itemID then
+                    table.insert(addonTable.allRecipes, { recipeID = recipeID, itemID = itemID })
+                    addonTable.itemToRecipeCache[itemID] = recipeID
                 end
             end
         end
@@ -48,7 +51,7 @@ EventRegistry:RegisterCallback("ProfessionsRecipeListMixin.Event.OnRecipeSelecte
         if slots then
             for _, slot in ipairs(slots) do
                 slot.Button:HookScript("OnClick", function(self, key)
-                    if IsControlKeyDown() and key == "LeftButton" then
+                    if key == "LeftButton" and IsCorrectModKey(TSRCDB["MOD_KEY"]) then
                         local recipeID = FindRecipeIDByItemID(self.item)
                         if recipeID then
                             C_TradeSkillUI.OpenRecipe(recipeID)
@@ -62,7 +65,6 @@ EventRegistry:RegisterCallback("ProfessionsRecipeListMixin.Event.OnRecipeSelecte
         addonTable.ignoreSelection = false
         return
     end
-    if recipe.learned then
-        table.insert(addonTable.recipes, recipe.recipeID)
-    end
+
+    table.insert(addonTable.recipes, recipe.recipeID)
 end)
