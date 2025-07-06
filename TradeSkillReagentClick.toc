@@ -1,6 +1,6 @@
 ## Interface: 110107
 ## Title: TradeSkillReagentClick
-## Version: @project-version@
+## Version: 1.1.1
 ## X-Curse-Project-ID: 1285727
 ## Author: LightskyGG
 ## IconTexture: 132911
